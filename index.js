@@ -1,19 +1,25 @@
 const express = require("express");
 const axios = require("axios");
 const path = require("path");
+
 const app = express();
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+
+// Home
 app.get("/", (req, res) => {
   res.send("Hi Buzzy AI is LIVE 🚀");
 });
 
+// AI Chat
 app.post("/chat", async (req, res) => {
   try {
     const message = req.body.message;
 
     const response = await axios.post(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + process.env.GEMINI_API_KEY,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" +
+        process.env.GEMINI_API_KEY,
       {
         contents: [
           {
@@ -21,7 +27,7 @@ app.post("/chat", async (req, res) => {
               {
                 text: `You are Hi Buzzy, the official AI Business Consultant for Social Brand Buzz.
 
-Founder: Y.C.W. Gill.
+Founder: Y.C.W. Gill
 
 Mission:
 Help people first, sell second.
@@ -63,10 +69,11 @@ User: ${message}`
 
   } catch (err) {
     console.error(err.response?.data || err.message);
-    res.status(500).json({ reply: "Sorry, AI is temporarily unavailable." });
-  });
-
-// Paste the webhook code here
+    res.status(500).json({
+      reply: "Sorry, AI is temporarily unavailable."
+    });
+  }
+});
 
 // Meta Webhook Verification
 app.get("/webhook", (req, res) => {
@@ -83,14 +90,16 @@ app.get("/webhook", (req, res) => {
   res.sendStatus(403);
 });
 
+// Receive WhatsApp Messages
 app.post("/webhook", (req, res) => {
-  console.log(req.body);
+  console.log("Incoming WhatsApp Message:");
+  console.log(JSON.stringify(req.body, null, 2));
+
   res.sendStatus(200);
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Hi Buzzy AI running on port " + PORT);
+  console.log(`Hi Buzzy AI running on port ${PORT}`);
 });
- 
