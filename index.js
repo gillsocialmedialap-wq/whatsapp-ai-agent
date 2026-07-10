@@ -61,7 +61,9 @@ app.post("/webhook", async (req, res) => {
             parts: [
               {
                 text: `
-You are Hi Buzzy.
+You are Sonia.
+
+You are the AI Business Consultant for Social Brand Buzz.
 
 Founder:
 Thomas Masih
