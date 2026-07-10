@@ -13,7 +13,7 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
 // Home Route
 app.get("/", (req, res) => {
-  res.send("Hi Buzzy AI is LIVE 🚀");
+  res.send("SONIA TEST");
 });
 
 // Webhook Verification
